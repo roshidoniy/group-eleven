@@ -67,7 +67,7 @@ export default function Home() {
       <main className="min-h-screen bg-opacity-90" suppressHydrationWarning>
         <div className="container mx-auto p-4">
           <h1 className="text-3xl font-bold text-center mb-8 text-[#3F5954]">
-            Lecture Links
+            Group 11 Links
           </h1>
 
           <div className="flex items-center justify-center space-x-4 mb-8">
