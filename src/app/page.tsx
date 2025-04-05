@@ -187,7 +187,7 @@ export default function Home() {
               className="flex items-center gap-2 text-[#566B5F] hover:text-[#3F5954] transition-colors"
             >
               <MessageCircle size={16} />
-              <span className="text-sm font-medium">Found an issue? Message me on Telegram</span>
+              <span className="text-sm font-medium">Found an issue or have suggestions? Message me on Telegram</span>
             </a>
           </div>
           
