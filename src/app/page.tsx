@@ -181,7 +181,7 @@ export default function Home() {
           {/* Feedback Section - Telegram Link */}
           <div className="mt-16 mb-6 flex flex-col items-center">
             <a 
-              href="https://t.me/yourTelegramUsername" 
+              href="https://t.me/roshid1y" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-[#566B5F] hover:text-[#3F5954] transition-colors"
