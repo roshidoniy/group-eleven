@@ -74,7 +74,7 @@ export const courses: Course[] = [
     time: { hour: 12, min: 30, weekday: "Thursday" },
     lab: {
       link: "https://teams.microsoft.com/dl/launcher/launcher.html?url=/_%23/l/meetup-join/19:meeting_ZjMzNDhmN2UtYWU3ZC00OTg0LTkzMjUtMjQ3Mzk5NzEzMzZk@thread.v2/0?context%3D%257b%2522Tid%2522%253a%2522e8a52afe-6ea8-47f7-b275-783f7087b5fa%2522%252c%2522Oid%2522%253a%2522924a1556-5e14-4faf-9d4a-17b156530661%2522%257d%26anon%3Dtrue&type=meetup-join&deeplinkId=4dc6e879-7675-490e-9967-05ad1ca4ca5c&directDl=true&msLaunch=true&enableMobilePage=true&suppressPrompt=true",
-      time: { hour: 16, min: 50, weekday: "Thursday" },
+      time: { hour: 14, min: 0, weekday: "Thursday" },
     },
   },
   {
