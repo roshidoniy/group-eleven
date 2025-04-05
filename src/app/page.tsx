@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import React, { useState, useEffect } from "react";
+import { CopyIcon, CheckIcon } from "lucide-react";
 import { courses } from "@/data/courses";
 import { convertToLocalTime, formatTime } from "@/utils/timeUtils";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const HydrationSafeSwitch = (props: React.ComponentProps<typeof Switch>) => {
   return <Switch {...props} suppressHydrationWarning />;
@@ -20,6 +22,7 @@ export default function Home() {
   const [usePolandTime, setUsePolandTime] = useState(false);
   const [timeZoneName, setTimeZoneName] = useState("");
   const [mounted, setMounted] = useState(false);
+  const [copiedLinks, setCopiedLinks] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     try {
@@ -48,83 +51,134 @@ export default function Home() {
     return usePolandTime ? formatTime(time) : convertToLocalTime(time);
   };
 
+  const handleCopyLink = (link: string, id: string) => {
+    navigator.clipboard.writeText(link).then(() => {
+      setCopiedLinks({ ...copiedLinks, [id]: true });
+      
+      // Reset the copied status after 2 seconds
+      setTimeout(() => {
+        setCopiedLinks((prev) => ({ ...prev, [id]: false }));
+      }, 2000);
+    });
+  };
+
   return (
-    <main className="min-h-screen bg-opacity-90" suppressHydrationWarning>
-      <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold text-center mb-8 text-[#3F5954]">
-          Lecture Links
-        </h1>
+    <TooltipProvider>
+      <main className="min-h-screen bg-opacity-90" suppressHydrationWarning>
+        <div className="container mx-auto p-4">
+          <h1 className="text-3xl font-bold text-center mb-8 text-[#3F5954]">
+            Lecture Links
+          </h1>
 
-        <div className="flex items-center justify-center space-x-4 mb-8">
-          <div className="flex items-center space-x-2">
-            <Label htmlFor="timezone-toggle" className="text-[#566B5F]">
-              {mounted ? timeZoneName : "Loading..."}
-            </Label>
-            <HydrationSafeSwitch
-              id="timezone-toggle"
-              checked={usePolandTime}
-              onCheckedChange={setUsePolandTime}
-              disabled={!mounted}
-            />
-            <Label htmlFor="timezone-toggle" className="text-[#566B5F]">
-              Poland
-            </Label>
+          <div className="flex items-center justify-center space-x-4 mb-8">
+            <div className="flex items-center space-x-2">
+              <Label htmlFor="timezone-toggle" className="text-[#566B5F]">
+                {mounted ? timeZoneName : "Loading..."}
+              </Label>
+              <HydrationSafeSwitch
+                id="timezone-toggle"
+                checked={usePolandTime}
+                onCheckedChange={setUsePolandTime}
+                disabled={!mounted}
+              />
+              <Label htmlFor="timezone-toggle" className="text-[#566B5F]">
+                Poland
+              </Label>
+            </div>
           </div>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {courses.map((data) => (
-            <Card
-              key={data.name}
-              className="p-6 hover:shadow-lg hover:shadow-[#A5BEA4]/30 transition-all duration-200"
-            >
-              <h2 className="text-xl font-semibold mb-4 text-[#566B5F]">
-                {data.name}
-              </h2>
-              <div className="space-y-4">
-                  <div key={data.id} className="space-y-4">
-                    {/* Lecture section */}
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-[#7D98A1]">
-                          Lecture
-                        </span>
-                        <span className="text-sm text-[#7A7266] text-right">
-                          <p>{data.time.weekday} </p>
-                          {getDisplayTime(data.time)}
-                        </span>
-                      </div>
-                      <a href={data.link} target="_blank">
-                        <HydrationSafeButton className="w-full cursor-pointer bg-[#6A9A98] hover:bg-[#5D8683]" >
-                          Join Lecture Meeting
-                        </HydrationSafeButton>
-                      </a>
-                    </div>
-
-                    {data.lab && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {courses.map((data) => (
+              <Card
+                key={data.name}
+                className="p-6 hover:shadow-lg hover:shadow-[#A5BEA4]/30 transition-all duration-200"
+              >
+                <h2 className="text-xl font-semibold mb-4 text-[#566B5F]">
+                  {data.name}
+                </h2>
+                <div className="space-y-4">
+                    <div key={data.id} className="space-y-4">
+                      {/* Lecture section */}
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium text-[#A3825C]">
-                            Lab
+                          <span className="text-sm font-medium text-[#7D98A1]">
+                            Lecture
                           </span>
                           <span className="text-sm text-[#7A7266] text-right">
-                            <p>{data.lab.time.weekday}</p>
-                            {getDisplayTime(data.lab.time)}
+                            <p>{data.time.weekday} </p>
+                            {getDisplayTime(data.time)}
                           </span>
                         </div>
-                        <a href={data.lab.link} target="_blank">
-                          <HydrationSafeButton className="w-full cursor-pointer bg-[#D1A979] hover:bg-[#BA9568]">
-                            Join Lab Meeting
-                          </HydrationSafeButton>
-                        </a>
+                        <div className="flex gap-2">
+                          <a href={data.link} target="_blank" className="flex-1">
+                            <HydrationSafeButton className="w-full cursor-pointer bg-[#6A9A98] hover:bg-[#5D8683]" >
+                              Join Lecture Meeting
+                            </HydrationSafeButton>
+                          </a>
+                          <Tooltip>
+                            <TooltipTrigger asChild className="cursor-pointer">
+                              <button
+                                className="min-w-10 h-10 flex items-center justify-center bg-[#6A9A98] hover:bg-[#5D8683] text-white rounded-md"
+                                onClick={() => handleCopyLink(data.link, `lecture-${data.id}`)}
+                              >
+                                {copiedLinks[`lecture-${data.id}`] ? (
+                                  <CheckIcon className="h-4 w-4" />
+                                ) : (
+                                  <CopyIcon className="h-4 w-4" />
+                                )}
+                              </button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              {copiedLinks[`lecture-${data.id}`] ? "Copied!" : "Copy Link"}
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
                       </div>
-                    )}
-                  </div>
-              </div>
-            </Card>
-          ))}
+
+                      {data.lab && (
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-medium text-[#A3825C]">
+                              Lab
+                            </span>
+                            <span className="text-sm text-[#7A7266] text-right">
+                              <p>{data.lab.time.weekday}</p>
+                              {getDisplayTime(data.lab.time)}
+                            </span>
+                          </div>
+                          <div className="flex gap-2">
+                            <a href={data.lab.link} target="_blank" className="flex-1">
+                              <HydrationSafeButton className="w-full cursor-pointer bg-[#D1A979] hover:bg-[#BA9568]">
+                                Join Lab Meeting
+                              </HydrationSafeButton>
+                            </a>
+                            <Tooltip>
+                              <TooltipTrigger asChild className="cursor-pointer">
+                                <button
+                                  className="min-w-10 h-10 flex items-center justify-center bg-[#D1A979] hover:bg-[#BA9568] text-white rounded-md"
+                                  onClick={() => data.lab && handleCopyLink(data.lab.link, `lab-${data.id}`)}
+                                >
+                                  {copiedLinks[`lab-${data.id}`] ? (
+                                    <CheckIcon className="h-4 w-4" />
+                                  ) : (
+                                    <CopyIcon className="h-4 w-4" />
+                                  )}
+                                </button>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                {copiedLinks[`lab-${data.id}`] ? "Copied!" : "Copy Link"}
+                              </TooltipContent>
+                            </Tooltip>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                </div>
+              </Card>
+            ))}
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </TooltipProvider>
   );
 }
