@@ -30,7 +30,7 @@ export const courses: Course[] = [
     time: { hour: 14, min: 40, weekday: "Monday" },
     lab: {
       link: "https://teams.microsoft.com/l/meetup-join/19%3ameeting_NDU2ZjM0YTItYjZkZC00MWU1LWI0NDktZDM2YmVlODc2ZTQ4%40thread.v2/0?context=%7b%22Tid%22%3a%22e8a52afe-6ea8-47f7-b275-783f7087b5fa%22%2c%22Oid%22%3a%22ad1464e6-f406-49ef-8ff1-b5ab1743acc9%22%7d",
-      time: { hour: 11, min: 0, weekday: "Wednesday" },
+      time: { hour: 11, min: 0, weekday: "Thursday" },
     },
   },
   {
