@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import React, { useState, useEffect } from "react";
-import { CopyIcon, CheckIcon } from "lucide-react";
+import { CopyIcon, CheckIcon, MessageCircle } from "lucide-react";
 import { courses } from "@/data/courses";
 import { convertToLocalTime, formatTime } from "@/utils/timeUtils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -177,6 +177,23 @@ export default function Home() {
               </Card>
             ))}
           </div>
+          
+          {/* Feedback Section - Telegram Link */}
+          <div className="mt-16 mb-6 flex flex-col items-center">
+            <a 
+              href="https://t.me/yourTelegramUsername" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-[#566B5F] hover:text-[#3F5954] transition-colors"
+            >
+              <MessageCircle size={16} />
+              <span className="text-sm font-medium">Found an issue? Message me on Telegram</span>
+            </a>
+          </div>
+          
+          <footer className="text-center text-sm text-[#7A7266] mt-4">
+            <p>© {new Date().getFullYear()} Lecture Links</p>
+          </footer>
         </div>
       </main>
     </TooltipProvider>
