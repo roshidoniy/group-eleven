@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import React, { useState, useEffect } from "react";
 import { CopyIcon, CheckIcon, MessageCircle } from "lucide-react";
 import { courses } from "@/data/courses";
-import { convertToLocalTime, formatTime } from "@/utils/timeUtils";
+import { convertToLocalTime, formatTime, getWeekdayName } from "@/utils/timeUtils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const HydrationSafeSwitch = (props: React.ComponentProps<typeof Switch>) => {
@@ -41,14 +41,16 @@ export default function Home() {
     }
   }, []);
 
-  const getDisplayTime = (time: { hour: number; min: number; weekday: string }): string => {
+  const getDisplayTime = (time: { hour: number; min: number; weekdayNumber: number }): { time: string; weekdayNumber: number } => {
     // If the component hasn't mounted yet, return the default formatted time
     // This prevents hydration errors by ensuring server and client render the same content initially
     if (!mounted) {
-      return formatTime(time);
+      return { time: formatTime(time), weekdayNumber: time.weekdayNumber };
     }
 
-    return usePolandTime ? formatTime(time) : convertToLocalTime(time);
+    return usePolandTime 
+      ? { time: formatTime(time), weekdayNumber: time.weekdayNumber } 
+      : convertToLocalTime(time);
   };
 
   const handleCopyLink = (link: string, id: string) => {
@@ -88,77 +90,44 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {courses.map((data) => (
-              <Card
-                key={data.name}
-                className="p-6 hover:shadow-lg hover:shadow-[#A5BEA4]/30 transition-all duration-200"
-              >
-                <h2 className="text-xl font-semibold mb-4 text-[#566B5F]">
-                  {data.name}
-                </h2>
-                <div className="space-y-4">
-                    <div key={data.id} className="space-y-4">
-                      {/* Lecture section */}
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium text-[#7D98A1]">
-                            Lecture
-                          </span>
-                          <span className="text-sm text-[#7A7266] text-right">
-                            <p>{data.time.weekday} </p>
-                            {getDisplayTime(data.time)}
-                          </span>
-                        </div>
-                        <div className="flex gap-2">
-                          <a href={data.link} target="_blank" className="flex-1">
-                            <HydrationSafeButton className="w-full cursor-pointer bg-[#6A9A98] hover:bg-[#5D8683]" >
-                              Join Lecture Meeting
-                            </HydrationSafeButton>
-                          </a>
-                          <Tooltip>
-                            <TooltipTrigger asChild className="cursor-pointer">
-                              <button
-                                className="min-w-10 h-10 flex items-center justify-center bg-[#6A9A98] hover:bg-[#5D8683] text-white rounded-md"
-                                onClick={() => handleCopyLink(data.link, `lecture-${data.id}`)}
-                              >
-                                {copiedLinks[`lecture-${data.id}`] ? (
-                                  <CheckIcon className="h-4 w-4" />
-                                ) : (
-                                  <CopyIcon className="h-4 w-4" />
-                                )}
-                              </button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              {copiedLinks[`lecture-${data.id}`] ? "Copied!" : "Copy Link"}
-                            </TooltipContent>
-                          </Tooltip>
-                        </div>
-                      </div>
-
-                      {data.lab && (
+            {courses.map((data) => {
+              const lectureTime = getDisplayTime(data.time);
+              const labTime = data.lab ? getDisplayTime(data.lab.time) : null;
+              
+              return (
+                <Card
+                  key={data.name}
+                  className="p-6 hover:shadow-lg hover:shadow-[#A5BEA4]/30 transition-all duration-200"
+                >
+                  <h2 className="text-xl font-semibold mb-4 text-[#566B5F]">
+                    {data.name}
+                  </h2>
+                  <div className="space-y-4">
+                      <div key={data.id} className="space-y-4">
+                        {/* Lecture section */}
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <span className="text-sm font-medium text-[#A3825C]">
-                              Lab
+                            <span className="text-sm font-medium text-[#7D98A1]">
+                              Lecture
                             </span>
                             <span className="text-sm text-[#7A7266] text-right">
-                              <p>{data.lab.time.weekday}</p>
-                              {getDisplayTime(data.lab.time)}
+                              <p>{getWeekdayName(lectureTime.weekdayNumber)} </p>
+                              {lectureTime.time}
                             </span>
                           </div>
                           <div className="flex gap-2">
-                            <a href={data.lab.link} target="_blank" className="flex-1">
-                              <HydrationSafeButton className="w-full cursor-pointer bg-[#D1A979] hover:bg-[#BA9568]">
-                                Join Lab Meeting
+                            <a href={data.link} target="_blank" className="flex-1">
+                              <HydrationSafeButton className="w-full cursor-pointer bg-[#6A9A98] hover:bg-[#5D8683]" >
+                                Join Lecture Meeting
                               </HydrationSafeButton>
                             </a>
                             <Tooltip>
                               <TooltipTrigger asChild className="cursor-pointer">
                                 <button
-                                  className="min-w-10 h-10 flex items-center justify-center bg-[#D1A979] hover:bg-[#BA9568] text-white rounded-md"
-                                  onClick={() => data.lab && handleCopyLink(data.lab.link, `lab-${data.id}`)}
+                                  className="min-w-10 h-10 flex items-center justify-center bg-[#6A9A98] hover:bg-[#5D8683] text-white rounded-md"
+                                  onClick={() => handleCopyLink(data.link, `lecture-${data.id}`)}
                                 >
-                                  {copiedLinks[`lab-${data.id}`] ? (
+                                  {copiedLinks[`lecture-${data.id}`] ? (
                                     <CheckIcon className="h-4 w-4" />
                                   ) : (
                                     <CopyIcon className="h-4 w-4" />
@@ -166,16 +135,54 @@ export default function Home() {
                                 </button>
                               </TooltipTrigger>
                               <TooltipContent>
-                                {copiedLinks[`lab-${data.id}`] ? "Copied!" : "Copy Link"}
+                                {copiedLinks[`lecture-${data.id}`] ? "Copied!" : "Copy Link"}
                               </TooltipContent>
                             </Tooltip>
                           </div>
                         </div>
-                      )}
-                    </div>
-                </div>
-              </Card>
-            ))}
+
+                        {data.lab && labTime && (
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm font-medium text-[#A3825C]">
+                                Lab
+                              </span>
+                              <span className="text-sm text-[#7A7266] text-right">
+                                <p>{getWeekdayName(labTime.weekdayNumber)}</p>
+                                {labTime.time}
+                              </span>
+                            </div>
+                            <div className="flex gap-2">
+                              <a href={data.lab.link} target="_blank" className="flex-1">
+                                <HydrationSafeButton className="w-full cursor-pointer bg-[#D1A979] hover:bg-[#BA9568]">
+                                  Join Lab Meeting
+                                </HydrationSafeButton>
+                              </a>
+                              <Tooltip>
+                                <TooltipTrigger asChild className="cursor-pointer">
+                                  <button
+                                    className="min-w-10 h-10 flex items-center justify-center bg-[#D1A979] hover:bg-[#BA9568] text-white rounded-md"
+                                    onClick={() => data.lab && handleCopyLink(data.lab.link, `lab-${data.id}`)}
+                                  >
+                                    {copiedLinks[`lab-${data.id}`] ? (
+                                      <CheckIcon className="h-4 w-4" />
+                                    ) : (
+                                      <CopyIcon className="h-4 w-4" />
+                                    )}
+                                  </button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  {copiedLinks[`lab-${data.id}`] ? "Copied!" : "Copy Link"}
+                                </TooltipContent>
+                              </Tooltip>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                  </div>
+                </Card>
+              );
+            })}
           </div>
           
           {/* Feedback Section - Telegram Link */}
