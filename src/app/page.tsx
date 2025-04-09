@@ -107,7 +107,7 @@ export default function Home() {
               const lectureTime = getDisplayTime(data.time);
               const labTime = data.lab ? getDisplayTime(data.lab.time) : null;
               const lecWeekDay = getWeekdayName(lectureTime.weekdayNumber);
-              const labWeekDay = getWeekdayName(labTime?.weekdayNumber);
+              const labWeekDay = getWeekdayName(labTime?.weekdayNumber || null);
               return (
                 <Card
                   key={data.name}
