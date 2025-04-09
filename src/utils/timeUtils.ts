@@ -1,4 +1,8 @@
-export const convertToLocalTime = (time: { hour: number; min: number; weekdayNumber: number }): { time: string; weekdayNumber: number } => {
+export const convertToLocalTime = (time: {
+  hour: number;
+  min: number;
+  weekdayNumber: number;
+}): { time: string; weekdayNumber: number } => {
   try {
     const now = new Date();
     const localTimezoneOffset = now.getTimezoneOffset(); // Offset in minutes relative to UTC
@@ -7,7 +11,7 @@ export const convertToLocalTime = (time: { hour: number; min: number; weekdayNum
       localTimezoneOffset + polandTimezoneOffset
     );
     let localHours = time.hour + timezoneOffsetDifference / 60;
-    
+
     // Calculate day change based on time difference
     let dayChange = 0;
     if (localHours < 0) {
@@ -26,7 +30,7 @@ export const convertToLocalTime = (time: { hour: number; min: number; weekdayNum
 
     return {
       time: `${formattedHours}:${formattedMinutes}`,
-      weekdayNumber: newWeekdayNumber
+      weekdayNumber: newWeekdayNumber,
     };
   } catch (error) {
     console.error("Error converting time:", error);
@@ -41,8 +45,17 @@ export const formatTime = (time: { hour: number; min: number }): string => {
   return `${formattedHours}:${formattedMinutes}`;
 };
 
+export const weekdays = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
+
 // Convert weekday number to name
 export const getWeekdayName = (weekdayNumber: number): string => {
-  const weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   return weekdays[weekdayNumber];
-}; 
+};
