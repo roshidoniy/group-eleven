@@ -82,6 +82,6 @@ export const courses: Course[] = [
     name: "Polish Lang",
     type: "Lecture",
     link: "https://teams.microsoft.com/l/meetup-join/19%3ameeting_Njk1M2MyMjktODNlNy00MzJkLWE1ZTItOTIxYjc3NmEwYWMy%40thread.v2/0?context=%7b%22Tid%22%3a%22e8a52afe-6ea8-47f7-b275-783f7087b5fa%22%2c%22Oid%22%3a%2299caf3ca-a681-4fb5-80fc-667faeedf65a%22%7d",
-    time: { hour: 10, min: 10, weekdayNumber: 4 },
+    time: { hour: 10, min: 10, weekdayNumber: 3 },
   },
 ];
