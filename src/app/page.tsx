@@ -7,12 +7,7 @@ import { Label } from "@/components/ui/label";
 import React, { useState, useEffect } from "react";
 import { CopyIcon, CheckIcon, MessageCircle } from "lucide-react";
 import { courses } from "@/data/courses";
-import {
-  convertToLocalTime,
-  formatTime,
-  getWeekdayName,
-  weekdays,
-} from "@/utils/timeUtils";
+import { convertToLocalTime, formatTime, weekdays } from "@/utils/timeUtils";
 import {
   Tooltip,
   TooltipContent,
@@ -34,11 +29,29 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [copiedLinks, setCopiedLinks] = useState<Record<string, boolean>>({});
   const [isLoadingTimezone, setIsLoadingTimezone] = useState(true);
+  const [todaysMeetings, setTodaysMeetings] = useState({
+    labs: 0,
+    lectures: 0,
+  });
 
   const currentDay = new Date().getDay();
 
   useEffect(() => {
     setIsLoadingTimezone(true);
+    courses.forEach((data) => {
+      if (currentDay - 1 === data.time.weekdayNumber) {
+        setTodaysMeetings((prev) => ({
+          ...prev,
+          lectures: prev.lectures + 1,
+        }));
+      }
+      if (currentDay - 1 === data.lab?.time.weekdayNumber) {
+        setTodaysMeetings((prev) => ({
+          ...prev,
+          labs: prev.labs + 1,
+        }));
+      }
+    });
     try {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
       if (tz) {
@@ -55,7 +68,7 @@ export default function Home() {
     } finally {
       setIsLoadingTimezone(false);
     }
-  }, []);
+  }, [currentDay]);
 
   const getDisplayTime = (time: {
     hour: number;
@@ -90,6 +103,61 @@ export default function Home() {
             Group 11 Links
           </h1>
 
+          <div className="bg-gradient-to-r from-[#A5BEA4]/30 to-[#6A9A98]/30 rounded-xl p-5 mb-8 shadow-md border-2 border-[#A5BEA4]/40 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-[#A5BEA4]/20 rounded-full -mr-8 -mt-8"></div>
+            <div className="absolute bottom-0 left-0 w-16 h-16 bg-[#6A9A98]/20 rounded-full -ml-6 -mb-6"></div>
+
+            <div className="flex items-center space-x-4">
+              <div className="bg-[#6A9A98]/30 p-3 rounded-full shadow-inner transform hover:rotate-12 transition-transform duration-300">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-[#3F5954]"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-medium text-[#3F5954] text-lg">
+                  Todays Schedule
+                </h3>
+                <p className="text-sm text-[#566B5F]">
+                  {todaysMeetings.lectures + todaysMeetings.labs > 0 ? (
+                    <>
+                      <span className="inline-block animate-bounce mr-1">
+                        ✨
+                      </span>
+                      <span className="font-semibold">
+                        Have {todaysMeetings.lectures + todaysMeetings.labs}
+                      </span>
+                      <span> classes today! </span>
+                      <span>
+                        ({todaysMeetings.lectures} lecture
+                        {todaysMeetings.lectures !== 1 ? "s" : ""},{" "}
+                        {todaysMeetings.labs} lab
+                        {todaysMeetings.labs !== 1 ? "s" : ""})
+                      </span>
+                    </>
+                  ) : (
+                    <span>
+                      <span className="inline-block animate-pulse mr-1">
+                        🏖️
+                      </span>{" "}
+                      No classes today folks!
+                    </span>
+                  )}
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="flex items-center justify-center space-x-4 mb-8">
             <div className="flex items-center space-x-2">
               <Label htmlFor="timezone-toggle" className="text-[#566B5F]">
@@ -111,8 +179,6 @@ export default function Home() {
             {courses.map((data) => {
               const lectureTime = getDisplayTime(data.time);
               const labTime = data.lab ? getDisplayTime(data.lab.time) : null;
-              const lecWeekDay = getWeekdayName(lectureTime.weekdayNumber);
-              const labWeekDay = getWeekdayName(labTime?.weekdayNumber || null);
               return (
                 <Card
                   key={data.name}
@@ -128,17 +194,12 @@ export default function Home() {
                           <span className="text-sm font-medium text-[#7D98A1]">
                             Lecture
                           </span>
-                          {weekdays[currentDay - 1] == lecWeekDay ? (
-                            <span className="text-sm text-right text-green-600">
-                              <p>{lecWeekDay} </p>
-                              {lectureTime.time}
-                            </span>
-                          ) : (
-                            <span className="text-sm text-[#7A7266] text-right">
-                              <p>{lecWeekDay} </p>
-                              {lectureTime.time}
-                            </span>
-                          )}
+                          <span
+                            className={`text-sm text-right  ${currentDay - 1 == lectureTime.weekdayNumber ? "text-green-600" : "text-[#7A7266]"}`}
+                          >
+                            <p>{weekdays[lectureTime.weekdayNumber]} </p>
+                            {lectureTime.time}
+                          </span>
                         </div>
                         <div className="flex gap-2">
                           <a
@@ -183,17 +244,12 @@ export default function Home() {
                             <span className="text-sm font-medium text-[#A3825C]">
                               Lab
                             </span>
-                            {weekdays[currentDay - 1] == labWeekDay ? (
-                              <span className="text-sm text-right text-green-600">
-                                <p>{labWeekDay} </p>
-                                {labTime.time}
-                              </span>
-                            ) : (
-                              <span className="text-sm text-[#7A7266] text-right">
-                                <p>{labWeekDay} </p>
-                                {labTime.time}
-                              </span>
-                            )}
+                            <span
+                              className={`text-sm text-right ${currentDay - 1 == labTime.weekdayNumber ? "text-green-600" : "text-[#7A7266]"}`}
+                            >
+                              <p>{weekdays[labTime.weekdayNumber]} </p>
+                              {labTime.time}
+                            </span>
                           </div>
                           <div className="flex gap-2">
                             <a

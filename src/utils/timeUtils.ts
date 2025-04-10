@@ -54,11 +54,3 @@ export const weekdays = [
   "Saturday",
   "Sunday",
 ];
-
-// Convert weekday number to name
-export const getWeekdayName = (weekdayNumber: number | null): string => {
-  if(weekdayNumber == null){
-    return ""
-  }
-  return weekdays[weekdayNumber];
-};
