@@ -33,9 +33,12 @@ export default function Home() {
   const [timeZoneName, setTimeZoneName] = useState("");
   const [mounted, setMounted] = useState(false);
   const [copiedLinks, setCopiedLinks] = useState<Record<string, boolean>>({});
+  const [isLoadingTimezone, setIsLoadingTimezone] = useState(true);
 
   const currentDay = new Date().getDay();
+
   useEffect(() => {
+    setIsLoadingTimezone(true);
     try {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
       if (tz) {
@@ -49,6 +52,8 @@ export default function Home() {
       console.error("Error getting timezone:", error);
       setTimeZoneName("Unknown");
       setMounted(true);
+    } finally {
+      setIsLoadingTimezone(false);
     }
   }, []);
 
@@ -58,7 +63,7 @@ export default function Home() {
     weekdayNumber: number;
   }): { time: string; weekdayNumber: number } => {
     if (!mounted) {
-      return { time: formatTime(time), weekdayNumber: time.weekdayNumber };
+      return { time: "Loading...", weekdayNumber: time.weekdayNumber };
     }
 
     return usePolandTime
@@ -88,7 +93,7 @@ export default function Home() {
           <div className="flex items-center justify-center space-x-4 mb-8">
             <div className="flex items-center space-x-2">
               <Label htmlFor="timezone-toggle" className="text-[#566B5F]">
-                {mounted ? timeZoneName : "Loading..."}
+                {isLoadingTimezone ? "Loading..." : timeZoneName}
               </Label>
               <HydrationSafeSwitch
                 id="timezone-toggle"
