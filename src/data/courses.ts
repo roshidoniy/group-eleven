@@ -30,7 +30,7 @@ export const courses: Course[] = [
     time: { hour: 14, min: 40, weekdayNumber: 0 },
     lab: {
       link: "https://teams.microsoft.com/l/meetup-join/19%3ameeting_NDU2ZjM0YTItYjZkZC00MWU1LWI0NDktZDM2YmVlODc2ZTQ4%40thread.v2/0?context=%7b%22Tid%22%3a%22e8a52afe-6ea8-47f7-b275-783f7087b5fa%22%2c%22Oid%22%3a%22ad1464e6-f406-49ef-8ff1-b5ab1743acc9%22%7d",
-      time: { hour: 11, min: 0, weekdayNumber: 3 },
+      time: { hour: 16, min: 50, weekdayNumber: 3 },
     },
   },
   {
@@ -59,7 +59,7 @@ export const courses: Course[] = [
     id: "4",
     name: "Introduction to Internet Technologies",
     type: "Lecture",
-    link: "https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZjQzYzY2OGUtYjZkMS00OTk3LThlZjAtNGNiZTJkNzk0ZDdk%40thread.v2/0?context=%7b%22Tid%22%3a%22e8a52afe-6ea8-47f7-b275-783f7087b5fa%22%2c%22Oid%22%3a%2245d24620-c458-430f-a5e2-1e889ce34adb%22%7d", 
+    link: "https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZjQzYzY2OGUtYjZkMS00OTk3LThlZjAtNGNiZTJkNzk0ZDdk%40thread.v2/0?context=%7b%22Tid%22%3a%22e8a52afe-6ea8-47f7-b275-783f7087b5fa%22%2c%22Oid%22%3a%2245d24620-c458-430f-a5e2-1e889ce34adb%22%7d",
     time: { hour: 8, min: 0, weekdayNumber: 1 },
     lab: {
       link: "https://teams.microsoft.com/dl/launcher/launcher.html?url=/_%23/l/meetup-join/19:meeting_Y2M5YzhmNmUtM2Y3Yi00ZTQyLThkYjUtMjQ4OThiY2VhODk0@thread.v2/0?context%3D%257b%2522Tid%2522%253a%2522e8a52afe-6ea8-47f7-b275-783f7087b5fa%2522%252c%2522Oid%2522%253a%252245d24620-c458-430f-a5e2-1e889ce34adb%2522%257d%26anon%3Dtrue&type=meetup-join&deeplinkId=5ab1fc97-baad-4e0a-8940-d5af899e7f95&directDl=true&msLaunch=true&enableMobilePage=true&suppressPrompt=true",
