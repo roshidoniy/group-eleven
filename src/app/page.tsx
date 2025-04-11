@@ -34,18 +34,18 @@ export default function Home() {
     lectures: 0,
   });
 
-  const currentDay = new Date().getDay();
+  const currentDay = new Date().getDay(); // 0-6, where 0 is Sunday
 
   useEffect(() => {
     setIsLoadingTimezone(true);
     courses.forEach((data) => {
-      if (currentDay - 1 === data.time.weekdayNumber) {
+      if (currentDay === data.time.weekdayNumber) {
         setTodaysMeetings((prev) => ({
           ...prev,
           lectures: prev.lectures + 1,
         }));
       }
-      if (currentDay - 1 === data.lab?.time.weekdayNumber) {
+      if (currentDay === data.lab?.time.weekdayNumber) {
         setTodaysMeetings((prev) => ({
           ...prev,
           labs: prev.labs + 1,
@@ -195,7 +195,7 @@ export default function Home() {
                             Lecture
                           </span>
                           <span
-                            className={`text-sm text-right  ${currentDay - 1 == lectureTime.weekdayNumber ? "text-green-600" : "text-[#7A7266]"}`}
+                            className={`text-sm text-right  ${currentDay === lectureTime.weekdayNumber ? "text-green-600" : "text-[#7A7266]"}`}
                           >
                             <p>{weekdays[lectureTime.weekdayNumber]} </p>
                             {lectureTime.time}
@@ -245,7 +245,7 @@ export default function Home() {
                               Lab
                             </span>
                             <span
-                              className={`text-sm text-right ${currentDay - 1 == labTime.weekdayNumber ? "text-green-600" : "text-[#7A7266]"}`}
+                              className={`text-sm text-right ${currentDay === labTime.weekdayNumber ? "text-green-600" : "text-[#7A7266]"}`}
                             >
                               <p>{weekdays[labTime.weekdayNumber]} </p>
                               {labTime.time}

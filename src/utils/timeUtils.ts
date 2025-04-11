@@ -46,11 +46,11 @@ export const formatTime = (time: { hour: number; min: number }): string => {
 };
 
 export const weekdays = [
+  "Sunday",
   "Monday",
   "Tuesday",
   "Wednesday",
   "Thursday",
   "Friday",
   "Saturday",
-  "Sunday",
 ];
