@@ -179,6 +179,8 @@ export default function Home() {
             {courses.map((data) => {
               const lectureTime = getDisplayTime(data.time);
               const labTime = data.lab ? getDisplayTime(data.lab.time) : null;
+              console.log(data.name, currentDay, lectureTime.weekdayNumber);
+              console.log(data.name, "lab", currentDay, labTime?.weekdayNumber);
               return (
                 <Card
                   key={data.name}
