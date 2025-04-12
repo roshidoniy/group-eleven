@@ -33,19 +33,21 @@ export default function Home() {
     labs: 0,
     lectures: 0,
   });
-
-  const currentDay = new Date().getDay(); // 0-6, where 0 is Sunday
+  const [currentDay, setCurrentDay] = useState(new Date().getDay());
 
   useEffect(() => {
     setIsLoadingTimezone(true);
+    const today = new Date().getDay();
+    setCurrentDay(today);
+
     courses.forEach((data) => {
-      if (currentDay === data.time.weekdayNumber) {
+      if (today === data.time.weekdayNumber) {
         setTodaysMeetings((prev) => ({
           ...prev,
           lectures: prev.lectures + 1,
         }));
       }
-      if (currentDay === data.lab?.time.weekdayNumber) {
+      if (today === data.lab?.time.weekdayNumber) {
         setTodaysMeetings((prev) => ({
           ...prev,
           labs: prev.labs + 1,
@@ -68,7 +70,7 @@ export default function Home() {
     } finally {
       setIsLoadingTimezone(false);
     }
-  }, [currentDay]);
+  }, []);
 
   const getDisplayTime = (time: {
     hour: number;
