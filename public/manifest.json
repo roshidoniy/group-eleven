@@ -1,15 +1,15 @@
 {
-  "name": "My Awesome PWA",
-  "short_name": "AwesomePWA",
+  "name": "Group 11",
+  "short_name": "GroupEleven",
   "icons": [
     {
-      "src": "/next.svg",
+      "src": "/vercel.svg",
       "sizes": "any",
       "type": "image/svg+xml"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#E0CEAC",
+  "background_color": "#E0CEAC",
   "display": "standalone",
   "start_url": "/"
 }
