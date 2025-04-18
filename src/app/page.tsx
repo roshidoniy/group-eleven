@@ -39,7 +39,7 @@ export default function Home() {
     setIsLoadingTimezone(true);
     const today = new Date().getDay();
     setCurrentDay(today);
-
+    console.log(process.env.NODE_ENV);
     courses.forEach((data) => {
       if (today === data.time.weekdayNumber) {
         setTodaysMeetings((prev) => ({
