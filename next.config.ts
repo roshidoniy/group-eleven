@@ -9,7 +9,7 @@ const withPWA = nextPWA({
 });
 
 const nextConfig: NextConfig = withPWA({
-  reactStrictMode: true, // Recommended
+  reactStrictMode: true,
   async rewrites() {
     return [
       {
