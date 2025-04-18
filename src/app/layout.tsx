@@ -20,7 +20,13 @@ export const metadata: Metadata = {
   description: "This website helps to find links, because Platon is bloated. ",
   openGraph: {
     images: "/showcase.png"
-  }
+  },
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    title: "Group 11",
+    statusBarStyle: "default",
+  },
 };
 
 export default function RootLayout({
