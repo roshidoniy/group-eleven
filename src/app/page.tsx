@@ -14,6 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import InstallButton from "@/components/InstallBtn";
 
 const HydrationSafeSwitch = (props: React.ComponentProps<typeof Switch>) => {
   return <Switch {...props} suppressHydrationWarning />;
@@ -126,36 +127,39 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <div>
-                <h3 className="font-medium text-[#3F5954] text-lg">
-                  Todays Schedule
-                </h3>
-                <p className="text-sm text-[#566B5F]">
-                  {todaysMeetings.lectures + todaysMeetings.labs > 0 ? (
-                    <>
-                      <span className="inline-block animate-bounce mr-1">
-                        ✨
-                      </span>
-                      <span className="font-semibold">
-                        Have {todaysMeetings.lectures + todaysMeetings.labs}
-                      </span>
-                      <span> classes today! </span>
+              <div className="w-full flex justify-between">
+                <div>
+                  <h3 className="font-medium text-[#3F5954] text-lg">
+                    Todays Schedule
+                  </h3>
+                  <p className="text-sm text-[#566B5F]">
+                    {todaysMeetings.lectures + todaysMeetings.labs > 0 ? (
+                      <>
+                        <span className="inline-block animate-bounce mr-1">
+                          ✨
+                        </span>
+                        <span className="font-semibold">
+                          Have {todaysMeetings.lectures + todaysMeetings.labs}
+                        </span>
+                        <span> classes today! </span>
+                        <span>
+                          ({todaysMeetings.lectures} lecture
+                          {todaysMeetings.lectures !== 1 ? "s" : ""},{" "}
+                          {todaysMeetings.labs} lab
+                          {todaysMeetings.labs !== 1 ? "s" : ""})
+                        </span>
+                      </>
+                    ) : (
                       <span>
-                        ({todaysMeetings.lectures} lecture
-                        {todaysMeetings.lectures !== 1 ? "s" : ""},{" "}
-                        {todaysMeetings.labs} lab
-                        {todaysMeetings.labs !== 1 ? "s" : ""})
+                        <span className="inline-block animate-pulse mr-1">
+                          🏖️
+                        </span>{" "}
+                        No classes today folks!
                       </span>
-                    </>
-                  ) : (
-                    <span>
-                      <span className="inline-block animate-pulse mr-1">
-                        🏖️
-                      </span>{" "}
-                      No classes today folks!
-                    </span>
-                  )}
-                </p>
+                    )}
+                  </p>
+                </div>
+                <InstallButton />
               </div>
             </div>
           </div>
