@@ -69,7 +69,10 @@ const InstallButton: React.FC = () => {
   }
 
   return (
-    <button onClick={handleInstallClick} className="cursor-pointer z-20">
+    <button
+      onClick={handleInstallClick}
+      className="cursor-pointer z-20 underline"
+    >
       Wanna Install App?
     </button>
   );

@@ -110,8 +110,8 @@ export default function Home() {
             <div className="absolute top-0 right-0 w-24 h-24 bg-[#A5BEA4]/20 rounded-full -mr-8 -mt-8"></div>
             <div className="absolute bottom-0 left-0 w-16 h-16 bg-[#6A9A98]/20 rounded-full -ml-6 -mb-6"></div>
 
-            <div className="flex items-center space-x-4">
-              <div className="bg-[#6A9A98]/30 p-3 rounded-full shadow-inner transform hover:rotate-12 transition-transform duration-300">
+            <div className="flex sm:items-center space-x-4 sm:flex-row flex-col sm:gap-0 gap-5">
+              <div className="bg-[#6A9A98]/30 flex p-3 rounded-full shadow-inner transform hover:rotate-12 transition-transform duration-300">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6 text-[#3F5954]"
@@ -126,10 +126,11 @@ export default function Home() {
                     d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                   />
                 </svg>
+                <p className="sm:hidden ml-2">Todays Schedule</p>
               </div>
-              <div className="w-full flex justify-between">
+              <div className="w-full flex justify-between sm:flex-row flex-col">
                 <div>
-                  <h3 className="font-medium text-[#3F5954] text-lg">
+                  <h3 className="font-medium text-[#3F5954] text-lg sm:block hidden">
                     Todays Schedule
                   </h3>
                   <p className="text-sm text-[#566B5F]">
