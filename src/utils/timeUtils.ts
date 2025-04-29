@@ -1,3 +1,5 @@
+"use client";
+
 export const convertToLocalTime = (time: {
   hour: number;
   min: number;

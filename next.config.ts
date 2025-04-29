@@ -1,4 +1,3 @@
-import type { NextConfig } from "next";
 import nextPWA from "next-pwa";
 import type { PWAConfig } from "next-pwa";
 
