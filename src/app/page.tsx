@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/tooltip";
 import InstallButton from "@/components/InstallBtn";
 
+export const dynamic = "force-dynamic"
+
 const HydrationSafeSwitch = (props: React.ComponentProps<typeof Switch>) => {
   return <Switch {...props} suppressHydrationWarning />;
 };
