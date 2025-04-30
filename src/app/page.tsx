@@ -15,8 +15,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import InstallButton from "@/components/InstallBtn";
+import TimeHighlight from "@/components/TimeHighlight";
 
-export const dynamic = "force-dynamic"
+export const dynamic = "force-dynamic";
 
 const HydrationSafeSwitch = (props: React.ComponentProps<typeof Switch>) => {
   return <Switch {...props} suppressHydrationWarning />;
@@ -199,17 +200,12 @@ export default function Home() {
                   <div className="space-y-4">
                     <div key={data.id} className="space-y-4">
                       <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium text-[#7D98A1]">
-                            Lecture
-                          </span>
-                          <span
-                            className={`text-sm text-right  ${currentDay === lectureTime.weekdayNumber ? "text-green-600" : "text-[#7A7266]"}`}
-                          >
-                            <p>{weekdays[lectureTime.weekdayNumber]} </p>
-                            {lectureTime.time}
-                          </span>
-                        </div>
+                        <TimeHighlight
+                          time={data.time}
+                          usePolandTime={usePolandTime}
+                          courseType="lecture"
+                          mounted={mounted}
+                        />
                         <div className="flex gap-2">
                           <a
                             href={data.link}
@@ -227,7 +223,7 @@ export default function Home() {
                                 onClick={() =>
                                   handleCopyLink(
                                     data.link,
-                                    `lecture-${data.id}`,
+                                    `lecture-${data.id}`
                                   )
                                 }
                               >
@@ -249,17 +245,12 @@ export default function Home() {
 
                       {data.lab && labTime && (
                         <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm font-medium text-[#A3825C]">
-                              Lab
-                            </span>
-                            <span
-                              className={`text-sm text-right ${currentDay === labTime.weekdayNumber ? "text-green-600" : "text-[#7A7266]"}`}
-                            >
-                              <p>{weekdays[labTime.weekdayNumber]} </p>
-                              {labTime.time}
-                            </span>
-                          </div>
+                          <TimeHighlight
+                            time={data.lab.time}
+                            usePolandTime={usePolandTime}
+                            courseType="lab"
+                            mounted={mounted}
+                          />
                           <div className="flex gap-2">
                             <a
                               href={data.lab.link}
@@ -281,7 +272,7 @@ export default function Home() {
                                     data.lab &&
                                     handleCopyLink(
                                       data.lab.link,
-                                      `lab-${data.id}`,
+                                      `lab-${data.id}`
                                     )
                                   }
                                 >

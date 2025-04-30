@@ -15,7 +15,7 @@ export interface Course {
   time: {
     hour: number;
     min: number;
-    weekdayNumber: number; // 0-6, where 0 is Sunday
+    weekdayNumber: number; 
   };
   lab?: LabSession;
 }
@@ -83,5 +83,23 @@ export const courses: Course[] = [
     type: "Lecture",
     link: "https://teams.microsoft.com/l/meetup-join/19%3ameeting_Njk1M2MyMjktODNlNy00MzJkLWE1ZTItOTIxYjc3NmEwYWMy%40thread.v2/0?context=%7b%22Tid%22%3a%22e8a52afe-6ea8-47f7-b275-783f7087b5fa%22%2c%22Oid%22%3a%2299caf3ca-a681-4fb5-80fc-667faeedf65a%22%7d",
     time: { hour: 10, min: 10, weekdayNumber: 4 },
+  },
+  {
+    id: "7",
+    name: "Web Technologies (Test data)",
+    type: "Lecture",
+    link: "https://example.com/webtech",
+    time: { hour: 10, min: 0, weekdayNumber: 3 },
+    lab: {
+      link: "https://example.com/webtech-lab",
+      time: { hour: 12, min: 0, weekdayNumber: 3 },
+    },
+  },
+  {
+    id: "8",
+    name: "Data Structures and Algorithms (Test data)", 
+    type: "Lecture",
+    link: "https://example.com/dsa",
+    time: { hour: 14, min: 0, weekdayNumber: 3 },
   },
 ];
