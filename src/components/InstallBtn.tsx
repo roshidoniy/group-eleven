@@ -1,4 +1,5 @@
-// components/InstallButton.tsx
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 interface BeforeInstallPromptEvent extends Event {
@@ -34,7 +35,7 @@ const InstallButton: React.FC = () => {
     return () => {
       window.removeEventListener(
         "beforeinstallprompt",
-        beforeInstallPromptHandler,
+        beforeInstallPromptHandler
       );
       window.removeEventListener("appinstalled", appInstalledHandler);
     };

@@ -1,31 +1,15 @@
 "use client";
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import React, { useState, useEffect } from "react";
-import { CopyIcon, CheckIcon, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { courses } from "@/data/courses";
-import { convertToLocalTime, formatTime, weekdays } from "@/utils/timeUtils";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import InstallButton from "@/components/InstallBtn";
-import TimeHighlight from "@/components/TimeHighlight";
+import CourseCard from "@/components/CourseCard";
 
 export const dynamic = "force-dynamic";
-
-const HydrationSafeSwitch = (props: React.ComponentProps<typeof Switch>) => {
-  return <Switch {...props} suppressHydrationWarning />;
-};
-
-const HydrationSafeButton = (props: React.ComponentProps<typeof Button>) => {
-  return <Button {...props} suppressHydrationWarning />;
-};
 
 export default function Home() {
   const [usePolandTime, setUsePolandTime] = useState(false);
@@ -37,12 +21,10 @@ export default function Home() {
     labs: 0,
     lectures: 0,
   });
-  const [currentDay, setCurrentDay] = useState(new Date().getDay());
 
   useEffect(() => {
     setIsLoadingTimezone(true);
     const today = new Date().getDay();
-    setCurrentDay(today);
     console.log(process.env.NODE_ENV);
     courses.forEach((data) => {
       if (today === data.time.weekdayNumber) {
@@ -75,20 +57,6 @@ export default function Home() {
       setIsLoadingTimezone(false);
     }
   }, []);
-
-  const getDisplayTime = (time: {
-    hour: number;
-    min: number;
-    weekdayNumber: number;
-  }): { time: string; weekdayNumber: number } => {
-    if (!mounted) {
-      return { time: "Loading...", weekdayNumber: time.weekdayNumber };
-    }
-
-    return usePolandTime
-      ? { time: formatTime(time), weekdayNumber: time.weekdayNumber }
-      : convertToLocalTime(time);
-  };
 
   const handleCopyLink = (link: string, id: string) => {
     navigator.clipboard.writeText(link).then(() => {
@@ -173,7 +141,7 @@ export default function Home() {
               <Label htmlFor="timezone-toggle" className="text-[#566B5F]">
                 {isLoadingTimezone ? "Loading..." : timeZoneName}
               </Label>
-              <HydrationSafeSwitch
+              <Switch
                 id="timezone-toggle"
                 checked={usePolandTime}
                 onCheckedChange={setUsePolandTime}
@@ -186,117 +154,16 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {courses.map((data) => {
-              const lectureTime = getDisplayTime(data.time);
-              const labTime = data.lab ? getDisplayTime(data.lab.time) : null;
-              return (
-                <Card
-                  key={data.name}
-                  className="p-6 hover:shadow-lg hover:shadow-[#A5BEA4]/30 transition-all duration-200"
-                >
-                  <h2 className="text-xl font-semibold mb-4 text-[#566B5F]">
-                    {data.name}
-                  </h2>
-                  <div className="space-y-4">
-                    <div key={data.id} className="space-y-4">
-                      <div className="space-y-2">
-                        <TimeHighlight
-                          time={data.time}
-                          usePolandTime={usePolandTime}
-                          courseType="lecture"
-                          mounted={mounted}
-                        />
-                        <div className="flex gap-2">
-                          <a
-                            href={data.link}
-                            target="_blank"
-                            className="flex-1"
-                          >
-                            <HydrationSafeButton className="w-full cursor-pointer bg-[#6A9A98] hover:bg-[#5D8683]">
-                              Join Lecture Meeting
-                            </HydrationSafeButton>
-                          </a>
-                          <Tooltip>
-                            <TooltipTrigger asChild className="cursor-pointer">
-                              <button
-                                className="min-w-10 h-10 flex items-center justify-center bg-[#6A9A98] hover:bg-[#5D8683] text-white rounded-md"
-                                onClick={() =>
-                                  handleCopyLink(
-                                    data.link,
-                                    `lecture-${data.id}`
-                                  )
-                                }
-                              >
-                                {copiedLinks[`lecture-${data.id}`] ? (
-                                  <CheckIcon className="h-4 w-4" />
-                                ) : (
-                                  <CopyIcon className="h-4 w-4" />
-                                )}
-                              </button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              {copiedLinks[`lecture-${data.id}`]
-                                ? "Copied!"
-                                : "Copy Link"}
-                            </TooltipContent>
-                          </Tooltip>
-                        </div>
-                      </div>
-
-                      {data.lab && labTime && (
-                        <div className="space-y-2">
-                          <TimeHighlight
-                            time={data.lab.time}
-                            usePolandTime={usePolandTime}
-                            courseType="lab"
-                            mounted={mounted}
-                          />
-                          <div className="flex gap-2">
-                            <a
-                              href={data.lab.link}
-                              target="_blank"
-                              className="flex-1"
-                            >
-                              <HydrationSafeButton className="w-full cursor-pointer bg-[#D1A979] hover:bg-[#BA9568]">
-                                Join Lab Meeting
-                              </HydrationSafeButton>
-                            </a>
-                            <Tooltip>
-                              <TooltipTrigger
-                                asChild
-                                className="cursor-pointer"
-                              >
-                                <button
-                                  className="min-w-10 h-10 flex items-center justify-center bg-[#D1A979] hover:bg-[#BA9568] text-white rounded-md"
-                                  onClick={() =>
-                                    data.lab &&
-                                    handleCopyLink(
-                                      data.lab.link,
-                                      `lab-${data.id}`
-                                    )
-                                  }
-                                >
-                                  {copiedLinks[`lab-${data.id}`] ? (
-                                    <CheckIcon className="h-4 w-4" />
-                                  ) : (
-                                    <CopyIcon className="h-4 w-4" />
-                                  )}
-                                </button>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                {copiedLinks[`lab-${data.id}`]
-                                  ? "Copied!"
-                                  : "Copy Link"}
-                              </TooltipContent>
-                            </Tooltip>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </Card>
-              );
-            })}
+            {courses.map((data) => (
+              <CourseCard
+                key={data.id}
+                data={data}
+                usePolandTime={usePolandTime}
+                mounted={mounted}
+                copiedLinks={copiedLinks}
+                handleCopyLink={handleCopyLink}
+              />
+            ))}
           </div>
 
           {/* Feedback Section - Telegram Link */}
@@ -315,7 +182,7 @@ export default function Home() {
           </div>
 
           <footer className="text-center text-sm text-[#7A7266] mt-4">
-            <p>© {new Date().getFullYear()} Lecture Links</p>
+            <p> {new Date().getFullYear()} Lecture Links</p>
           </footer>
         </div>
       </main>
