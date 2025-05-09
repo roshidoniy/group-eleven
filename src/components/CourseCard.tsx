@@ -18,6 +18,7 @@ interface CourseCardProps {
     mounted: boolean;
     copiedLinks: Record<string, boolean>;
     handleCopyLink: (link: string, id: string) => void;
+    disabled?: boolean;
 }
 
 const CourseCard: React.FC<CourseCardProps> = ({
@@ -26,9 +27,15 @@ const CourseCard: React.FC<CourseCardProps> = ({
     mounted,
     copiedLinks,
     handleCopyLink,
+    disabled,
 }) => {
+    const cardClasses = `
+        p-6 hover:shadow-lg hover:shadow-[#A5BEA4]/30 transition-all duration-200
+        ${disabled ? "opacity-50 pointer-events-none" : ""}
+    `;
+
     return (
-        <Card className="p-6 hover:shadow-lg hover:shadow-[#A5BEA4]/30 transition-all duration-200">
+        <Card className={cardClasses}>
             <h2 className="text-xl font-semibold mb-4 text-[#566B5F]">
                 {data.name}
             </h2>
