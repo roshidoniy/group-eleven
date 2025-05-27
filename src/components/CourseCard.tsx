@@ -134,6 +134,21 @@ const CourseCard: React.FC<CourseCardProps> = ({
                         </div>
                     </div>
                 )}
+
+                {data.importantEvents && data.importantEvents.length > 0 && (
+                    <div className="mt-4 pt-4 border-t border-gray-200">
+                        <h3 className="text-md font-semibold mb-2 text-[#566B5F]">
+                            Important Dates:
+                        </h3>
+                        <ul className="space-y-1 list-disc list-inside text-sm text-gray-700">
+                            {data.importantEvents.map((event, index) => (
+                                <li key={index}>
+                                    <span className="font-medium">{event.event_name}:</span> {event.day}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
             </div>
         </Card>
     );
