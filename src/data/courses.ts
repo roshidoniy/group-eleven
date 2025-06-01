@@ -39,9 +39,7 @@ export const courses: Course[] = [
       link: "https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZTdmYTQ4NGYtMjI4MC00ZTQ2LWI0NzUtM2JjNTA3YTUyZTFh%40thread.v2/0?context=%7b%22Tid%22%3a%22e8a52afe-6ea8-47f7-b275-783f7087b5fa%22%2c%22Oid%22%3a%22ad1464e6-f406-49ef-8ff1-b5ab1743acc9%22%7d",
       time: { hour: 16, min: 50, weekdayNumber: 4 },
     },
-    importantEvents: [
-      { event_name: "Final Kahoot", day: "2 June" },
-    ],
+    importantEvents: [{ event_name: "Final Kahoot", day: "2 June" }],
   },
   {
     id: "2",
@@ -54,7 +52,8 @@ export const courses: Course[] = [
       time: { hour: 19, min: 0, weekdayNumber: 1 },
     },
     importantEvents: [
-      { event_name: "Oral Exam", day: "2 June" },
+      { event_name: "Oral Exam", day: "2 June 19:00 Pl" },
+      { event_name: "Final Exam", day: "Saturday 14 June 9:00 Pl" },
     ],
   },
   {
@@ -89,9 +88,7 @@ export const courses: Course[] = [
       link: "https://teams.microsoft.com/dl/launcher/launcher.html?url=/_%23/l/meetup-join/19:meeting_ZjMzNDhmN2UtYWU3ZC00OTg0LTkzMjUtMjQ3Mzk5NzEzMzZk@thread.v2/0?context%3D%257b%2522Tid%2522%253a%2522e8a52afe-6ea8-47f7-b275-783f7087b5fa%2522%252c%2522Oid%2522%253a%2522924a1556-5e14-4faf-9d4a-17b156530661%2522%257d%26anon%3Dtrue&type=meetup-join&deeplinkId=4dc6e879-7675-490e-9967-05ad1ca4ca5c&directDl=true&msLaunch=true&enableMobilePage=true&suppressPrompt=true",
       time: { hour: 14, min: 0, weekdayNumber: 4 },
     },
-    importantEvents: [
-      { event_name: "Final Exam", day: "5 June" },
-    ],
+    importantEvents: [{ event_name: "Final Exam", day: "5 June" }],
   },
   {
     id: "6",
@@ -99,8 +96,6 @@ export const courses: Course[] = [
     type: "Lecture",
     link: "https://teams.microsoft.com/l/meetup-join/19%3ameeting_Njk1M2MyMjktODNlNy00MzJkLWE1ZTItOTIxYjc3NmEwYWMy%40thread.v2/0?context=%7b%22Tid%22%3a%22e8a52afe-6ea8-47f7-b275-783f7087b5fa%22%2c%22Oid%22%3a%2299caf3ca-a681-4fb5-80fc-667faeedf65a%22%7d",
     time: { hour: 10, min: 10, weekdayNumber: 4 },
-    importantEvents: [
-      { event_name: "Exam", day: "16 June" },
-    ],
+    importantEvents: [{ event_name: "Exam", day: "16 June" }],
   },
 ];
