@@ -142,7 +142,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
                         </h3>
                         <ul className="space-y-1 list-disc list-inside text-sm text-gray-700">
                             {data.importantEvents.map((event, index) => (
-                                <li key={index}>
+                                <li key={index} className={`${event.expired ? "line-through" : ""}`}>
                                     <span className="font-medium">{event.event_name}:</span> {event.day}
                                 </li>
                             ))}
