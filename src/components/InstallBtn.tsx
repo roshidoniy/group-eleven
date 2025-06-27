@@ -74,7 +74,7 @@ const InstallButton: React.FC = () => {
       onClick={handleInstallClick}
       className="cursor-pointer z-20 underline"
     >
-      Wanna Install App?
+      Install Web App
     </button>
   );
 };

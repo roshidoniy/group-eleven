@@ -24,7 +24,7 @@ export interface Course {
     weekdayNumber: number;
   };
   lab?: LabSession;
-  disabled?: boolean; // Added disabled field
+  disabled?: boolean; 
   importantEvents?: ImportantEvent[];
 }
 
@@ -43,6 +43,7 @@ export const courses: Course[] = [
     importantEvents: [
       { event_name: "Final Kahoot", day: "2 June", expired: true },
     ],
+    disabled: true,
   },
   {
     id: "2",
@@ -62,6 +63,7 @@ export const courses: Course[] = [
         expired: true,
       },
     ],
+    disabled: true,
   },
   {
     id: "3",
@@ -73,6 +75,7 @@ export const courses: Course[] = [
       link: "https://teams.microsoft.com/dl/launcher/launcher.html?url=/_%23/l/meetup-join/19:meeting_ODhmZmIwYzAtNDM4Mi00NTI2LTk2N2EtNmZiMjdlNDY0ZWMw@thread.v2/0?context%3D%257b%2522Tid%2522%253a%2522e8a52afe-6ea8-47f7-b275-783f7087b5fa%2522%252c%2522Oid%2522%253a%252245d24620-c458-430f-a5e2-1e889ce34adb%2522%257d%26anon%3Dtrue&type=meetup-join&deeplinkId=2a262df9-f514-46c9-9e2e-957b852bdf63&directDl=true&msLaunch=true&enableMobilePage=true&suppressPrompt=true",
       time: { hour: 16, min: 50, weekdayNumber: 2 },
     },
+    disabled: true,
   },
   {
     id: "4",
@@ -84,6 +87,7 @@ export const courses: Course[] = [
       link: "https://teams.microsoft.com/dl/launcher/launcher.html?url=/_%23/l/meetup-join/19:meeting_Y2M5YzhmNmUtM2Y3Yi00ZTQyLThkYjUtMjQ4OThiY2VhODk0@thread.v2/0?context%3D%257b%2522Tid%2522%253a%2522e8a52afe-6ea8-47f7-b275-783f7087b5fa%2522%252c%2522Oid%2522%253a%252245d24620-c458-430f-a5e2-1e889ce34adb%2522%257d%26anon%3Dtrue&type=meetup-join&deeplinkId=5ab1fc97-baad-4e0a-8940-d5af899e7f95&directDl=true&msLaunch=true&enableMobilePage=true&suppressPrompt=true",
       time: { hour: 19, min: 0, weekdayNumber: 2 },
     },
+    disabled: true,
   },
   {
     id: "5",
@@ -98,6 +102,7 @@ export const courses: Course[] = [
     importantEvents: [
       { event_name: "Final Exam", day: "5 June", expired: true },
     ],
+    disabled: true,
   },
   {
     id: "6",
@@ -106,5 +111,6 @@ export const courses: Course[] = [
     link: "https://teams.microsoft.com/l/meetup-join/19%3ameeting_Njk1M2MyMjktODNlNy00MzJkLWE1ZTItOTIxYjc3NmEwYWMy%40thread.v2/0?context=%7b%22Tid%22%3a%22e8a52afe-6ea8-47f7-b275-783f7087b5fa%22%2c%22Oid%22%3a%2299caf3ca-a681-4fb5-80fc-667faeedf65a%22%7d",
     time: { hour: 10, min: 10, weekdayNumber: 4 },
     importantEvents: [{ event_name: "Exam", day: "16 June", expired: false }],
+    disabled: true,
   },
 ];

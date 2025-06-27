@@ -30,12 +30,22 @@ const CourseCard: React.FC<CourseCardProps> = ({
     disabled,
 }) => {
     const cardClasses = `
-        p-6 hover:shadow-lg hover:shadow-[#A5BEA4]/30 transition-all duration-200
+        relative p-6 hover:shadow-lg hover:shadow-[#A5BEA4]/30 transition-all duration-200
         ${disabled ? "opacity-50 pointer-events-none" : ""}
     `;
 
     return (
-        <Card className={cardClasses}>
+        <Card className="relative overflow-hidden">
+            {disabled && (
+                <div className="absolute top-0 left-0 w-full h-full bg-[#F5F5F5] opacity-50 z-10">
+                    <div className="flex items-center justify-center h-full">
+                        <p className="text-lg font-semibold text-[#000000]">
+                            Course is Over
+                        </p>
+                    </div>
+                </div>
+            )}
+            <div className={cardClasses}>
             <h2 className="text-xl font-semibold mb-4 text-[#566B5F]">
                 {data.name}
             </h2>
@@ -150,6 +160,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
                     </div>
                 )}
             </div>
+        </div>
         </Card>
     );
 };
